@@ -35,7 +35,7 @@ RUN USER=dev && \
     chown root:root /usr/local/bin/fixuid && \
     chmod 4755 /usr/local/bin/fixuid && \
     mkdir -p /etc/fixuid && \
-    printf "user: $USER\ngroup: $GROUP\npaths: /home/dev\n" > /etc/fixuid/config.yml
+    printf "user: $USER\ngroup: $GROUP\npaths: [ '/home/dev' ]\n" > /etc/fixuid/config.yml
 ENTRYPOINT ["fixuid"]
 
 USER dev:dev
