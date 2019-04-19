@@ -6,6 +6,8 @@ ARG DEBCONF_NONINTERACTIVE_SEEN=true
 
 ENV GLOBAL_NPM_PACKAGES webpack webpack-dev-server karma-cli protractor typescript @angular/cli gulpjs/gulp-cli grunt-cli yo generator-generator generator-node forever nodemon node-supervisor ava javascript-typescript-langserver
 
+FROM codercom/code-server as codeserver
+
 FROM base as development
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -22,6 +24,8 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 COPY ./_vim /home/dev/.config/nvim
 COPY .tmux/.tmux.conf /home/dev
 RUN chown -R dev:dev /home/dev/.config /home/dev/.tmux.conf
+
+COPY --from=1 /usr/local/bin/code-server /usr/local/bin
 
 RUN echo 'export LANG=en_US.UTF-8' >> /home/dev/.profile && \
     echo 'export LC_CTYPE=en_US.UTF-8' >> /home/dev/.profile && \
