@@ -4,7 +4,7 @@ FROM node as base
 ARG DEBIAN_FRONTEND=noninteractive
 ARG DEBCONF_NONINTERACTIVE_SEEN=true
 
-ENV GLOBAL_NPM_PACKAGES webpack webpack-dev-server karma-cli protractor typescript @angular/cli gulpjs/gulp-cli grunt-cli yo generator-generator generator-node forever nodemon node-supervisor ava javascript-typescript-langserver
+ENV GLOBAL_NPM_PACKAGES webpack webpack-dev-server karma-cli protractor typescript @angular/cli gulpjs/gulp-cli grunt-cli yo generator-generator generator-node forever nodemon node-supervisor ava javascript-typescript-langserver eslint
 
 FROM codercom/code-server as codeserver
 
@@ -30,7 +30,8 @@ COPY --from=1 /usr/local/bin/code-server /usr/local/bin
 RUN echo 'export LANG=en_US.UTF-8' >> /home/dev/.profile && \
     echo 'export LC_CTYPE=en_US.UTF-8' >> /home/dev/.profile && \
     echo 'export PATH=$PATH:~/.config/nvim/.fzf/bin' >> /home/dev/.profile && \
-    echo '[ -f ~/.additions/profile ] && source ~/.additions/profile' >> /home/dev/.profile
+    echo '[ -f ~/.additions/profile ] && source ~/.additions/profile' >> /home/dev/.profile && \
+    echo '[ -f ~/.additions/bashrc ] && source ~/.additions/bashrc' >> /home/dev/.bashrc
 
 # install fixuid
 RUN USER=dev && \
